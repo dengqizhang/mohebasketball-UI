@@ -43,7 +43,7 @@
 <script>
 import { ref, reactive, onMounted, onBeforeMount } from "vue";
 import { Delete } from "@element-plus/icons-vue"; //删除按钮的样式导入
-import { VipManagement } from "../../../utils/api/interface.js";
+import { VipManagement } from "../../../../utils/api/interface.js";
 export default {
   setup() {
     const tableData = reactive({
