@@ -1,44 +1,36 @@
-import { createRouter, createWebHashHistory } from "vue-router"
-
+import { createRouter, createWebHashHistory, } from "vue-router"
 const routes = [
     {
-        path: '/login',
-        name: "loginRoot",
-        component: () => import('../components/login/loginRoot.vue')
+        path: '/admin_login',
+        name: "admin_login",
+        component: () => import('../components/home/admin_home/admin_login.vue')
     },
     {
         path: '/',
         name: "home",
-        component: () => import('../components/home/root_home/home.vue'),
+        component: () => import('../components/home/admin_home/admin_home.vue'),
         children: [
             {
-                path: '/DataReportPage',
-                component: () => import('../components/home/root_home/DataReport/DataReportPage.vue'),
+                path: '/',
+                name: "admin_datawork",
+                component: () => import('../components/home/admin_home/admin_datawork.vue'),
             },
             {
-                path: '/demo',
-                component: () => import('../components/home/root_home/DataReport/demo.vue'),
+                path: '/admin_vipadmin',
+                name: "admin_vipadmin",
+                component: () => import('../components/home/admin_home/admin_vipadmin.vue'),
             },
             {
-                path: '/VipManagement',
-                component: () => import('../components/home/root_home/RootMenu/VipManagement.vue'),
+                path: '/admin_productadmin',
+                name: "admin_productadmin",
+                component: () => import('../components/home/admin_home/admin_productadmin.vue'),
             },
         ]
     },
     {
-        path: '/DataReportPage',
-        name: "DataReportPage",
-        component: () => import('../components/home/root_home/DataReport/DataReportPage.vue')
-    },
-    {
-        path: '/demo1',
-        name: "demo1",
-        component: () => import('../components/home/root_home/DataReport/safety_demo/demo1.vue'),
-    },
-    {
-        path: '/demo2',
-        name: "demo2",
-        component: () => import('../components/home/root_home/DataReport/safety_demo/demo2.vue'),
+        path: '/user_login',
+        name: "user_login",
+        component: () => import('../components/home/user_home/user_login.vue'),
     },
     {
         path: '/user_home',
@@ -46,18 +38,32 @@ const routes = [
         component: () => import('../components/home/user_home/user_home.vue'),
         children: [
             {
-                path: '/product',
-                name: "product",
-                component: () => import('../components/home/user_home/user_home_product.vue'),
+                path: '/user_home/product',
+                name: "user_product",
+                component: () => import('../components/home/user_home/user_productsell.vue'),
             },
             {
-                path: '/user_home/',
-                name: "datashow",
-                component: () => import('../components/home/user_home/user_home_datashow.vue'),
+                path: '/user_home',
+                name: "user_datashow",
+                component: () => import('../components/home/user_home/user_datashow.vue'),
+            },
+            {
+                path: '/user_lookvip',
+                name: "user_lookvip",
+                component: () => import('../components/home/user_home/user_lookvip.vue'),
+            },
+            {
+                path: '/user_order',
+                name: "user_order",
+                component: () => import('../components/home/user_home/user_order.vue'),
+            },
+            {
+                path: '/user_nowuser',
+                name: "user_nowuser",
+                component: () => import('../components/home/user_home/user_nowuser.vue'),
             },
         ]
     },
-
 ]
 export const router = createRouter({
     history: createWebHashHistory(),

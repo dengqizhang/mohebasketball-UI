@@ -3,9 +3,13 @@ import { reactive } from "vue";
 
 const api = axios.create({
     //请求地址的公共部分
-    baseURL: 'http://localhost:8003',
+    baseURL: 'http://localhost:10010',
+    headers: {
+        'Content-Type': 'application/json'
+    },
     //请求的超时时间
-    timeout: 3000
+    timeout: 3000,
+    withCredentials: false
 })
 
 //axios请求拦截器
