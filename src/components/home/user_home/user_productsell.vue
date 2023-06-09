@@ -56,15 +56,11 @@
           <div>价格：{{ item.price }}</div>
         </div>
         <div>
-          <div>{{ counts }}</div>
-          <button
-            @click="
-              addproductquantity();
-              amoutList(item.price);
-            "
-          >
+          <!-- <div>{{ counts }}</div> -->
+          <button @click="addproductquantity(item.id, item.price)">
             增加数量
           </button>
+          <div>{{ addproduct }}</div>
         </div>
       </div>
 
@@ -93,12 +89,17 @@ const state = reactive({
   store: useUserStore(),
 });
 import { ref, reactive, onMounted, toRaw, computed, watch } from "vue";
-import { getuserproduct, getcat_products } from "../../../utils/api/interface";
+import {
+  getuserproduct,
+  getcat_products,
+  postproductstock,
+} from "../../../utils/api/interface";
 import { ShoppingTrolley } from "@element-plus/icons-vue";
 import { useUserStore } from "../../../store";
 import { ElMessage } from "element-plus";
 let dialogFormVisible = ref(false);
 const message = ref(null); //提示消息
+//商品列表
 const tableData = reactive([
   {
     id: "",
@@ -108,19 +109,27 @@ const tableData = reactive([
     stock: "",
   },
 ]);
+//增加商品数量的变量
+let addproduct = ref([1]);
+//保存商品id的值和商品数量
+let counts = ref({});
+//商品库存的变量
 let amout111 = reactive([]);
+//计算商品库存的求和
 const a = reactive({
   sum: computed(() => {
     return amout111.reduce((acc, cur) => acc + cur, 0);
   }),
 });
+//向商品库存变量添加库存
 const amoutList = (data) => {
   amout111.push(data);
 };
-let counts = ref({});
+//商品id列表
 const productsId = reactive({
   ids: [],
 });
+//购物车的商品列表
 const productdata = reactive({
   data: {
     id: "",
@@ -130,6 +139,8 @@ const productdata = reactive({
     stock: "",
   },
 });
+//定义后端要的参数idStockMap
+const idStockMap = {};
 const open3 = () => {
   ElMessage({
     message: "暂无商品，请先添加商品！",
@@ -137,15 +148,21 @@ const open3 = () => {
   });
 };
 const open = () => {
+  // const obj = { ...idStockMap };
+  // data = JSON.stringify(obj.value);
+  // console.log(data);
+  postproductstock().then((res) => {});
   ElMessage({
     message: "结账成功，正在生成订单。",
     type: "success",
   });
 };
 //增加数量按钮事件
-const addproductquantity = () => {
+const addproductquantity = (id, price) => {
   console.log("hello");
-  addproductCar(38);
+  addproductCar(id);
+  amoutList(price);
+  // addproductCar(38);
 };
 //计算数组中每个相同元素的出现数量
 const countEqualNumbers = () => {
@@ -164,7 +181,8 @@ const addproductCar = (row) => {
   productsId.ids.push(row);
   //将商品id和所选数量传递
   counts = countEqualNumbers(productsId.ids);
-  console.log(counts);
+  idStockMap.value = counts;
+  console.log(idStockMap.value);
 };
 //查询购物车的商品列表
 const productcay = () => {
