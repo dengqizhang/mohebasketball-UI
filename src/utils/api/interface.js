@@ -53,14 +53,13 @@ export const getuserorders = () => api({
     }
 })
 //根据id批量修改商品的库存
-export const postproductstock = () => api({
+export const postproductstock = (idStockMap) => api({
     url: '/user/product/batchUpdateByIds',
     method: 'post',
     data: {
-        "idStockMap": {
-            "4": 2,
-            "9": 1
-        }
+
+        idStockMap: idStockMap
+
     },
     headers: {
         Accept: 'application/json' // 指定接受JSON格式的响应数据

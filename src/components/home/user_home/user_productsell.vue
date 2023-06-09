@@ -140,7 +140,10 @@ const productdata = reactive({
   },
 });
 //定义后端要的参数idStockMap
-const idStockMap = {};
+const idStockMap = {
+  4: 2,
+  9: 1,
+};
 const open3 = () => {
   ElMessage({
     message: "暂无商品，请先添加商品！",
@@ -148,13 +151,16 @@ const open3 = () => {
   });
 };
 const open = () => {
-  // const obj = { ...idStockMap };
-  // data = JSON.stringify(obj.value);
-  // console.log(data);
-  postproductstock().then((res) => {});
-  ElMessage({
-    message: "结账成功，正在生成订单。",
-    type: "success",
+  //向批量修改接口传参
+  postproductstock(idStockMap.value).then((res) => {
+    if (res.status == 200) {
+      ElMessage({
+        message: "结账成功，正在生成订单。",
+        type: "success",
+      });
+    } else {
+      ElMessage.error("结账错误，请重试并检查网络！");
+    }
   });
 };
 //增加数量按钮事件
@@ -162,7 +168,6 @@ const addproductquantity = (id, price) => {
   console.log("hello");
   addproductCar(id);
   amoutList(price);
-  // addproductCar(38);
 };
 //计算数组中每个相同元素的出现数量
 const countEqualNumbers = () => {
